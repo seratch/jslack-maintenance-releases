@@ -10,6 +10,7 @@ import com.github.seratch.jslack.api.model.User;
 import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,11 +23,17 @@ import static org.junit.Assert.*;
 @Slf4j
 public class users_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
 
     @Test
     public void showUsers() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
         UsersListResponse users = slack.methods(token).usersList(r -> r.includeLocale(true).limit(100));
         assertThat(users.getError(), is(nullValue()));
 
@@ -42,7 +49,7 @@ public class users_Test {
 
     @Test
     public void usersScenarios() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
         {
             UsersSetPresenceResponse response = slack.methods().usersSetPresence(r -> r.token(token).presence("away"));
@@ -138,7 +145,7 @@ public class users_Test {
 
     @Test
     public void lookupByEMailSupported() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
         UsersListResponse usersListResponse = slack.methods().usersList(r -> r
                 .token(token)
                 .presence(true));

@@ -1,5 +1,7 @@
 package util.sample_json_generation;
 
+import com.github.seratch.jslack.common.json.GsonFactory;
+import com.google.gson.JsonElement;
 import com.github.seratch.jslack.api.model.*;
 import com.github.seratch.jslack.api.model.block.*;
 import com.github.seratch.jslack.api.model.block.composition.ConfirmationDialogObject;
@@ -7,8 +9,6 @@ import com.github.seratch.jslack.api.model.block.composition.PlainTextObject;
 import com.github.seratch.jslack.api.model.block.composition.TextObject;
 import com.github.seratch.jslack.api.model.block.element.BlockElement;
 import com.github.seratch.jslack.api.model.block.element.ImageElement;
-import com.github.seratch.jslack.common.json.GsonFactory;
-import com.google.gson.JsonElement;
 
 import java.util.Arrays;
 import java.util.HashMap;

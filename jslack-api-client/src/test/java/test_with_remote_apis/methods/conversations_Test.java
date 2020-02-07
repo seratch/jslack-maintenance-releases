@@ -16,6 +16,7 @@ import com.github.seratch.jslack.api.model.block.composition.PlainTextObject;
 import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Test;
 import util.TestChannelGenerator;
 
@@ -30,8 +31,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @Slf4j
 public class conversations_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String token = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
     @Test
     public void channelConversation() throws IOException, SlackApiException {
@@ -318,7 +326,7 @@ public class conversations_Test {
     @Test
     public void postLongText() throws IOException, SlackApiException {
 
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(token);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, token);
 
         Conversation channel = channelGenerator.createNewPublicChannel("test" + System.currentTimeMillis());
 
@@ -368,7 +376,7 @@ public class conversations_Test {
     @Test
     public void replies() throws IOException, SlackApiException {
 
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(token);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, token);
         Conversation channel = channelGenerator.createNewPublicChannel("test" + System.currentTimeMillis());
 
         try {
@@ -439,7 +447,7 @@ public class conversations_Test {
 
     @Test
     public void longChannelName_public_ok() throws Exception {
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(token);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, token);
         String channelName = "test" + System.currentTimeMillis();
         while (channelName.length() < 80) {
             channelName += "_";
@@ -450,7 +458,7 @@ public class conversations_Test {
 
     @Test
     public void longChannelName_private_ok() throws Exception {
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(token);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, token);
         String channelName = "secret-" + System.currentTimeMillis();
         while (channelName.length() < 80) {
             channelName += "_";

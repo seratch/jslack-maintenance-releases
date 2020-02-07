@@ -8,6 +8,7 @@ import com.github.seratch.jslack.api.scim.request.GroupsPatchRequest;
 import com.github.seratch.jslack.api.scim.response.*;
 import config.Constants;
 import config.SlackTestConfig;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,8 +20,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 // required scope - admin
 public class ApiTest {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String token = System.getenv(Constants.SLACK_TEST_ADMIN_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String token = System.getenv(Constants.SLACK_SDK_TEST_GRID_ORG_ADMIN_USER_TOKEN);
 
     @Test
     public void getServiceProviderConfigs() throws IOException, SCIMApiException {

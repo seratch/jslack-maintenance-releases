@@ -18,6 +18,7 @@ import com.github.seratch.jslack.api.model.block.composition.MarkdownTextObject;
 import com.github.seratch.jslack.api.model.block.element.BlockElements;
 import config.Constants;
 import config.SlackTestConfig;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,9 +36,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class BlockKit_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String token = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
 
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
     String randomChannelId;
 
     @Before

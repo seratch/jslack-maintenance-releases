@@ -9,6 +9,7 @@ import com.github.seratch.jslack.api.audit.response.SchemasResponse;
 import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -25,8 +26,15 @@ import static org.junit.Assert.fail;
 @Slf4j
 public class ApiTest {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String token = System.getenv(Constants.SLACK_TEST_ADMIN_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String token = System.getenv(Constants.SLACK_SDK_TEST_GRID_ORG_ADMIN_USER_TOKEN);
 
     @Test
     public void getSchemas() throws IOException, AuditApiException {

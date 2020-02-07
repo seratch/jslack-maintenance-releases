@@ -8,6 +8,7 @@ import com.github.seratch.jslack.api.methods.response.conversations.Conversation
 import com.github.seratch.jslack.api.methods.response.conversations.ConversationsCreateResponse;
 import com.github.seratch.jslack.api.model.Conversation;
 import config.SlackTestConfig;
+import org.junit.AfterClass;
 
 import java.io.IOException;
 
@@ -16,10 +17,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestChannelGenerator {
 
+    private final Slack slack;
     private final String token;
-    private final Slack slack = Slack.getInstance(SlackTestConfig.get());
 
-    public TestChannelGenerator(String token) {
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    public TestChannelGenerator(SlackTestConfig testConfig, String token) {
+        this.slack = Slack.getInstance(testConfig.getConfig());
         this.token = token;
     }
 

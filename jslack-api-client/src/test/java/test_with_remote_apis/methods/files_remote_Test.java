@@ -12,6 +12,7 @@ import config.Constants;
 import config.SlackTestConfig;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -30,9 +31,16 @@ import static org.junit.Assert.assertTrue;
 @Slf4j
 public class files_remote_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String userToken = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
-    String botToken = System.getenv(Constants.SLACK_BOT_USER_TEST_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
 
     @Test
     public void listAllFiles() throws IOException, SlackApiException {

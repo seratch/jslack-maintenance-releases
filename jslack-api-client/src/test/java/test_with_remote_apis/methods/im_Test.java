@@ -8,6 +8,7 @@ import com.github.seratch.jslack.api.model.User;
 import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,8 +19,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @Slf4j
 public class im_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String token = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
     @Test
     public void operations() throws Exception {

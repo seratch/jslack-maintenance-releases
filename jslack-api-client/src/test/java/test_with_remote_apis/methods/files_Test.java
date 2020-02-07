@@ -21,6 +21,7 @@ import com.github.seratch.jslack.shortcut.model.ChannelName;
 import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Test;
 import util.TestChannelGenerator;
 
@@ -35,9 +36,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @Slf4j
 public class files_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
-    String userToken = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
-    String botToken = System.getenv(Constants.SLACK_BOT_USER_TEST_OAUTH_ACCESS_TOKEN);
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
+
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
 
     @Test
     public void describe() throws IOException, SlackApiException {
@@ -351,7 +359,7 @@ public class files_Test {
 
     @Test
     public void createFileForAThread() throws IOException, SlackApiException {
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(userToken);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, userToken);
         Conversation channel = channelGenerator.createNewPublicChannel("test" + System.currentTimeMillis());
 
         try {

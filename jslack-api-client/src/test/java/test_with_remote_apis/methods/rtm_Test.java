@@ -19,6 +19,7 @@ import com.google.gson.JsonParser;
 import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,10 +39,16 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 @Slf4j
 public class rtm_Test {
 
-    Slack slack = Slack.getInstance(SlackTestConfig.get());
+    static SlackTestConfig testConfig = SlackTestConfig.getInstance();
+    static Slack slack = Slack.getInstance(testConfig.getConfig());
 
-    String botToken = System.getenv(Constants.SLACK_BOT_USER_TEST_OAUTH_ACCESS_TOKEN);
-    String channelCreationToken = System.getenv(Constants.SLACK_TEST_OAUTH_ACCESS_TOKEN);
+    @AfterClass
+    public static void tearDown() throws InterruptedException {
+        SlackTestConfig.awaitCompletion(testConfig);
+    }
+
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
+    String channelCreationToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
     User currentUser;
 
     JsonParser jsonParser = new JsonParser();
@@ -77,7 +84,7 @@ public class rtm_Test {
     @Test
     public void test() throws Exception {
         String channelName = "test" + System.currentTimeMillis();
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(channelCreationToken);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, channelCreationToken);
         Conversation channel = channelGenerator.createNewPublicChannel(channelName);
         try {
             String channelId = channel.getId();
@@ -85,7 +92,7 @@ public class rtm_Test {
             // need to invite the bot user to the created channel before starting an RTM session
             inviteBotUser(channelId);
 
-            String botToken = System.getenv(Constants.SLACK_BOT_USER_TEST_OAUTH_ACCESS_TOKEN);
+            String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
 
             RTMEventsDispatcher dispatcher = RTMEventsDispatcherFactory.getInstance();
             HelloHandler hello = new HelloHandler();
@@ -96,7 +103,7 @@ public class rtm_Test {
 
             dispatcher.register(new UserTypingHandler());
 
-            Slack slack = Slack.getInstance(SlackTestConfig.get());
+            Slack slack = Slack.getInstance(testConfig.getConfig());
 
             try (RTMClient rtm = slack.rtmConnect(botToken)) {
                 rtm.addMessageHandler(dispatcher.toMessageHandler());
@@ -133,7 +140,7 @@ public class rtm_Test {
         Slack slack = Slack.getInstance(config);
 
         String channelName = "test" + System.currentTimeMillis();
-        TestChannelGenerator channelGenerator = new TestChannelGenerator(channelCreationToken);
+        TestChannelGenerator channelGenerator = new TestChannelGenerator(testConfig, channelCreationToken);
         Conversation channel = channelGenerator.createNewPublicChannel(channelName);
         try {
             String channelId = channel.getId();
