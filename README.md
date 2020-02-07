@@ -1,6 +1,6 @@
 ## jSlack
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/jslack.svg?label=Maven%20Central)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.seratch%22%20a%3A%22jslack%22) [![Build Status](https://travis-ci.org/seratch/jslack.svg?branch=master)](https://travis-ci.org/seratch/jslack)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/jslack.svg?label=Maven%20Central)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.seratch%22%20a%3A%22jslack%22) [![Build Status](https://travis-ci.org/seratch/jslack-maintenance-releases.svg?branch=master)](https://travis-ci.org/seratch/jslack-maintenance-releases)
 
 jSlack is a Java library to easily integrate your operations with [Slack](https://slack.com/). The library currently supports the following APIs.
 
@@ -10,7 +10,7 @@ jSlack is a Java library to easily integrate your operations with [Slack](https:
 - [SCIM API](https://api.slack.com/scim)
 - [Audit Logs API](https://api.slack.com/docs/audit-logs-api)
 - [Status API](https://api.slack.com/docs/slack-status)
-- [Useful modules to build Slack App backend services](https://github.com/seratch/jslack/tree/master/jslack-app-backend/src/main/java/com/github/seratch/jslack/app_backend)
+- [Useful modules to build Slack App backend services](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-app-backend/src/main/java/com/github/seratch/jslack-maintenance-releases/app_backend)
   - [OAuth 2.0](https://api.slack.com/docs/oauth)
   - [OAuth 2.0 - Granular Permissions](https://api.slack.com/authentication/basics)
   - [Events API](https://api.slack.com/events-api)
@@ -40,7 +40,7 @@ If you really don't need classes for building Slack app backend (= you need only
 
 The `{latest version}` is [![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/jslack.svg?label=Maven%20Central)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.seratch%22%20a%3A%22jslack%22)
 
-See also: [Getting started with groovysh](https://github.com/seratch/jslack/wiki/Getting-Started-with-groovysh)
+See also: [Getting started with groovysh](https://github.com/seratch/jslack-maintenance-releases/wiki/Getting-Started-with-groovysh)
 
 #### Slack App Server-side Framework
 
@@ -95,7 +95,7 @@ server.start(); // http://localhost:3000
 
 ### API Client Examples
 
-If you like using Kotlin, check [this repository](https://github.com/seratch/jslack-kotlin-examples) as well 🙌
+If you like using Kotlin, check [this repository](https://github.com/seratch/jslack-maintenance-releases-kotlin-examples) as well 🙌
 
 #### Incoming Webhooks
 
@@ -205,7 +205,7 @@ ChannelsCreateResponse response =
 
 #### API Methods Examples
 
-You can find more examples here: https://github.com/seratch/jslack/tree/master/src/test/java/com/github/seratch/jslack
+You can find more examples here: https://github.com/seratch/jslack-maintenance-releases/tree/master/src/test/java/com/github/seratch/jslack-maintenance-releases
 
 ##### Post a message to a channel
 
@@ -311,7 +311,7 @@ app.event(MessageDeletedEvent.class, (event, ctx) -> {
 
 #### Slack App Backend Examples
 
-jSlack offers a full-stack Slack app framework named _Lightning⚡_. Check [its README](https://github.com/seratch/jslack/tree/master/jslack-lightning) to learn the basics first.
+jSlack offers a full-stack Slack app framework named _Lightning⚡_. Check [its README](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning) to learn the basics first.
 
 ```kotlin
 import com.github.seratch.jslack.lightning.App
@@ -350,11 +350,11 @@ fun main() {
 
 Also, there are lots of working examples:
 
-* [Docker examples](https://github.com/seratch/jslack/tree/master/jslack-lightning-docker-examples)
-* [Examples in Kotlin](https://github.com/seratch/jslack/tree/master/jslack-lightning-kotlin-examples)
-* [Examples using Spring Boot](https://github.com/seratch/jslack/tree/master/jslack-lightning-spring-boot-examples/src/main/java/example)
-* [Examples using Micronaut](https://github.com/seratch/jslack/tree/master/jslack-lightning-micronaut/src/test/java)
-* [Examples using Quarkus](https://github.com/seratch/jslack/tree/master/jslack-lightning-quarkus-examples)
+* [Docker examples](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning-docker-examples)
+* [Examples in Kotlin](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning-kotlin-examples)
+* [Examples using Spring Boot](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning-spring-boot-examples/src/main/java/example)
+* [Examples using Micronaut](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning-micronaut/src/test/java)
+* [Examples using Quarkus](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning-quarkus-examples)
 
 #### Real Time Messaging API
 
@@ -430,7 +430,7 @@ jSlack already depends on [google-gson](https://github.com/google/gson) library.
 
 * [SCIM (System for Cross-domain Identity Management)](http://www.simplecloud.info/)
 * [RFC 7644: System for Cross-domain Identity Management: Protocol](http://www.rfc-editor.org/rfc/rfc7644.txt)
-* [SCIM API Response](https://github.com/seratch/jslack/tree/master/jslack-api-client/src/main/java/com/github/seratch/jslack/api/scim/response)
+* [SCIM API Response](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-api-client/src/main/java/com/github/seratch/jslack-maintenance-releases/api/scim/response)
 
 ```java
 // users
@@ -456,7 +456,7 @@ GroupsSearchResponse pagination = slack.scim(token).searchGroups(req -> req.coun
 #### Audit Logs API
 
 * [Audit Logs API Official Document](https://api.slack.com/docs/audit-logs-api)
-* [Audit Logs API Response](https://github.com/seratch/jslack/tree/master/jslack-api-client/src/main/java/com/github/seratch/jslack/api/audit/response)
+* [Audit Logs API Response](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-api-client/src/main/java/com/github/seratch/jslack-maintenance-releases/api/audit/response)
 
 ```java
 SchemasResponse response = slack.audit(token).getSchemas();
