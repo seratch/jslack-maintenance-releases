@@ -21,7 +21,7 @@ public class FieldsTest {
         String json = reader.readWholeAsString("/v1/actions.json");
         ActionsResponse obj = GsonFactory.createSnakeCase().fromJson(json, ActionsResponse.class);
         verifyIfAllGettersReturnNonNull(obj);
-        verifyIfAllGettersReturnNonNullRecursively(obj.getActions());
+        verifyIfAllGettersReturnNonNullRecursively(obj.getActions(), "getWorkflowBuilder");
     }
 
     @Test
@@ -47,6 +47,6 @@ public class FieldsTest {
         String json = reader.readWholeAsString("/v1/schemas.json");
         SchemasResponse obj = GsonFactory.createSnakeCase().fromJson(json, SchemasResponse.class);
         verifyIfAllGettersReturnNonNull(obj);
-        verifyIfAllGettersReturnNonNullRecursively(obj.getSchemas().get(0));
+        verifyIfAllGettersReturnNonNullRecursively(obj.getSchemas().get(0), "getWorkflow");
     }
 }
