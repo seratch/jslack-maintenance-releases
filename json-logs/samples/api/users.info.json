@@ -22,9 +22,11 @@
       "status_emoji": "",
       "status_expiration": 12345,
       "avatar_hash": "",
+      "api_app_id": "A00000000",
+      "always_active": false,
       "image_original": "https://www.example.com/",
       "is_custom_image": false,
-      "email": "",
+      "bot_id": "B00000000",
       "first_name": "",
       "last_name": "",
       "image_24": "https://www.example.com/",
@@ -35,10 +37,7 @@
       "image_512": "https://www.example.com/",
       "image_1024": "https://www.example.com/",
       "status_text_canonical": "",
-      "team": "T00000000",
-      "api_app_id": "A00000000",
-      "always_active": false,
-      "bot_id": "B00000000"
+      "team": "T00000000"
     },
     "is_admin": false,
     "is_owner": false,
@@ -47,9 +46,7 @@
     "is_ultra_restricted": false,
     "is_bot": false,
     "is_app_user": false,
-    "updated": 12345,
-    "has_2fa": false,
-    "locale": ""
+    "updated": 12345
   },
   "error": "",
   "needed": "",

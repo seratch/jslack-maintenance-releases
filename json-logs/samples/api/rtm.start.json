@@ -211,6 +211,10 @@
       "last_dismissed_scroll_search_tooltip_timestamp": 12345,
       "has_used_quickswitcher_shortcut": false,
       "seen_quickswitcher_shortcut_tip_count": 12345,
+      "browsers_dismissed_channels_low_results_education": false,
+      "browsers_seen_initial_channels_education": false,
+      "browsers_dismissed_people_low_results_education": false,
+      "browsers_seen_initial_people_education": false,
       "a11y_animations": false,
       "seen_keyboard_shortcuts_coachmark": false,
       "needs_initial_password_set": false,
@@ -268,7 +272,9 @@
       "deprecation_toast_last_seen": 12345,
       "deprecation_modal_last_seen": 12345,
       "iap1_lab": 12345,
+      "ia_top_nav_theme": "",
       "ia_platform_actions_lab": 12345,
+      "activity_view": "",
       "failover_proxy_check_completed": 12345,
       "edge_upload_proxy_check_completed": 12345,
       "app_subdomain_check_completed": 12345,
@@ -281,7 +287,8 @@
       "seen_message_navigation_educational_toast": false,
       "contextual_message_shortcuts_modal_was_seen": false,
       "message_navigation_toast_was_seen": false,
-      "show_drafts_page_sidebar": false,
+      "up_to_browse_kb_shortcut": false,
+      "channel_sections": "",
       "tz": "",
       "locales_enabled": {
         "de-DE": "",
@@ -292,9 +299,7 @@
         "fr-FR": "",
         "pt-BR": "",
         "ja-JP": ""
-      },
-      "channel_sections": "",
-      "ia_top_nav_theme": ""
+      }
     },
     "created": 12345,
     "manual_presence": ""
@@ -431,6 +436,7 @@
       "show_join_leave": false,
       "enterprise_mobile_device_check": false,
       "gg_enabled": false,
+      "has_seen_partner_promo": false,
       "disable_sidebar_connect_prompts": [
         ""
       ],
@@ -475,6 +481,7 @@
         ]
       },
       "workflows_webhook_trigger_enabled": false,
+      "workflows_export_csv_enabled": false,
       "invites_limit": false
     },
     "icon": {
