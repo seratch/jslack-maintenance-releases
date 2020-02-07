@@ -35,7 +35,7 @@ import java.net.URISyntaxException;
  * <p>
  * https://{your team name}.slack.com/apps/manage/custom-integrations
  */
-public class Slack {
+public class Slack implements AutoCloseable {
 
     private static final Slack SINGLETON = new Slack(SlackConfig.DEFAULT, new SlackHttpClient());
 
@@ -70,6 +70,11 @@ public class Slack {
 
     public SlackHttpClient getHttpClient() {
         return this.httpClient;
+    }
+
+    @Override
+    public void close() throws Exception {
+        getHttpClient().close();
     }
 
     /**
