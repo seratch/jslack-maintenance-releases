@@ -95,7 +95,7 @@ server.start(); // http://localhost:3000
 
 ### API Client Examples
 
-If you like using Kotlin, check [this repository](https://github.com/seratch/jslack-maintenance-releases-kotlin-examples) as well 🙌
+If you like using Kotlin, check [these](https://github.com/seratch/jslack-maintenance-releases/tree/master/jslack-lightning-kotlin-examples/src/main/kotlin/examples) as well 🙌
 
 #### Incoming Webhooks
 
