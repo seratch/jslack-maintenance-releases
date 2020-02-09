@@ -5,6 +5,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * https://api.slack.com/changelog/2019-09-what-they-see-is-what-you-get-and-more-and-less
  */
@@ -139,6 +140,7 @@ public class RichTextSectionElement extends BlockElement implements RichTextElem
         private boolean bold;
         private boolean italic;
         private boolean strike;
+        private boolean code;
     }
 
 }

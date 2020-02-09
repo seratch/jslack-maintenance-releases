@@ -2,25 +2,24 @@ package com.github.seratch.jslack.api.model.block.element;
 
 import com.github.seratch.jslack.api.model.block.composition.ConfirmationDialogObject;
 import com.github.seratch.jslack.api.model.block.composition.OptionObject;
-import com.github.seratch.jslack.api.model.block.composition.PlainTextObject;
 import lombok.*;
 
 import java.util.List;
 
 /**
- * https://api.slack.com/reference/block-kit/block-elements#radio
+ * https://api.slack.com/reference/block-kit/block-elements#checkboxes
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RadioButtonsElement extends BlockElement {
-    public static final String TYPE = "radio_buttons";
+public class CheckboxesElement extends BlockElement {
+    public static final String TYPE = "checkboxes";
     private final String type = TYPE;
 
     /**
-     * An identifier for the action triggered when the radio button group is changed.
+     * An identifier for the action triggered when the checkbox group is changed.
      * You can use this when you receive an interaction payload to identify the source of the action.
      * Should be unique among all other action_ids used elsewhere by your app.
      * Maximum length for this field is 255 characters.
@@ -40,14 +39,14 @@ public class RadioButtonsElement extends BlockElement {
     private List<OptionObject> options;
 
     /**
-     * An option object that exactly matches one of the options within options.
-     * This option will be selected when the radio button group initially loads.
+     * An array of option objects that exactly matches one or more of the options within options.
+     * These options will be selected when the checkbox group initially loads.
      */
-    private OptionObject initialOption;
+    private List<OptionObject> initialOptions;
 
     /**
      * A confirm object that defines an optional confirmation dialog
-     * that appears after clicking one of the radio buttons in this element.
+     * that appears after clicking one of the checkboxes in this element.
      */
     private ConfirmationDialogObject confirm;
 }
