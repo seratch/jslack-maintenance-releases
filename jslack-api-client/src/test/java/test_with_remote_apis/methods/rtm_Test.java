@@ -47,16 +47,14 @@ public class rtm_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
+    String classicAppBotToken = System.getenv(Constants.SLACK_SDK_TEST_CLASSIC_APP_BOT_TOKEN);
     String channelCreationToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
     User currentUser;
-
-    JsonParser jsonParser = new JsonParser();
 
     @Before
     public void loadBotUser() throws IOException {
         if (currentUser == null) {
-            RTMClient rtm = slack.rtmConnect(botToken);
+            RTMClient rtm = slack.rtmConnect(classicAppBotToken);
             currentUser = rtm.getConnectedBotUser();
         }
     }
@@ -150,7 +148,7 @@ public class rtm_Test {
 
             Thread.sleep(3000);
 
-            try (RTMClient rtm = slack.rtmStart(botToken)) {
+            try (RTMClient rtm = slack.rtmStart(classicAppBotToken)) {
                 User user = rtm.getConnectedBotUser();
 
                 assertThat(user.getId(), is(notNullValue()));
@@ -169,7 +167,7 @@ public class rtm_Test {
     @Ignore
     @Test
     public void rtmConnect_withoutFullConnectedUserInfo() throws Exception {
-        try (RTMClient rtm = slack.rtmConnect(botToken, false)) {
+        try (RTMClient rtm = slack.rtmConnect(classicAppBotToken, false)) {
             User user = rtm.getConnectedBotUser();
             assertThat(user.getId(), is(notNullValue()));
             assertThat(user.getName(), is(notNullValue()));
@@ -196,7 +194,7 @@ public class rtm_Test {
         RTMMessageHandler handler1 = new RTMMessageHandler() {
             @Override
             public void handle(String message) {
-                JsonObject json = jsonParser.parse(message).getAsJsonObject();
+                JsonObject json = JsonParser.parseString(message).getAsJsonObject();
                 if (json.get("error") == null) {
                     counter.incrementAndGet();
                 }

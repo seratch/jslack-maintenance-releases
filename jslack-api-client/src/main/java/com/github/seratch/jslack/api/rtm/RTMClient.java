@@ -6,6 +6,8 @@ import com.github.seratch.jslack.api.methods.request.rtm.RTMConnectRequest;
 import com.github.seratch.jslack.api.methods.response.rtm.RTMConnectResponse;
 import com.github.seratch.jslack.api.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.glassfish.tyrus.client.ClientManager;
+import org.glassfish.tyrus.client.ClientProperties;
 
 import javax.websocket.*;
 import java.io.Closeable;
@@ -77,8 +79,16 @@ public class RTMClient implements Closeable {
      * Calling this method won't work as you expect.
      */
     public void connect() throws IOException, DeploymentException {
-        WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-        container.connectToServer(this, wssUri);
+        ClientManager client = ClientManager.createClient();
+        String proxy = null;
+        proxy = slack.getHttpClient().getConfig().getProxyUrl();
+        if (proxy != null) {
+            if (log.isDebugEnabled()) {
+                log.debug("The RTM client's going to use an HTTP proxy: {}", proxy);
+            }
+            client.getProperties().put(ClientProperties.PROXY_URI, proxy);
+        }
+        client.connectToServer(this, wssUri);
         log.debug("client connected to the server: {}", wssUri);
     }
 
