@@ -30,15 +30,15 @@ public class reactions_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
 
     @Test
     public void test() throws IOException, SlackApiException {
-        String channel = slack.methods().channelsList(r -> r.token(token).excludeArchived(true))
+        String channel = slack.methods().channelsList(r -> r.token(botToken).excludeArchived(true))
                 .getChannels().get(0).getId();
 
         ChatPostMessageResponse postMessage = slack.methods().chatPostMessage(ChatPostMessageRequest.builder()
-                .token(token)
+                .token(botToken)
                 .channel(channel)
                 .text("hello")
                 .build());
@@ -47,7 +47,7 @@ public class reactions_Test {
 
         String timestamp = postMessage.getTs();
         ReactionsAddResponse addResponse = slack.methods().reactionsAdd(r -> r
-                .token(token)
+                .token(botToken)
                 .name("smile")
                 .channel(channel)
                 .timestamp(timestamp));
@@ -55,14 +55,14 @@ public class reactions_Test {
         assertThat(addResponse.isOk(), is(true));
 
         ReactionsGetResponse getResponse = slack.methods().reactionsGet(r -> r
-                .token(token)
+                .token(botToken)
                 .channel(channel)
                 .timestamp(timestamp));
         assertThat(getResponse.getError(), is(nullValue()));
         assertThat(getResponse.isOk(), is(true));
 
         ReactionsRemoveResponse removeResponse = slack.methods().reactionsRemove(r -> r
-                .token(token)
+                .token(botToken)
                 .name("smile")
                 .channel(channel)
                 .timestamp(timestamp));
@@ -73,11 +73,11 @@ public class reactions_Test {
 
     @Test
     public void list() throws IOException, SlackApiException {
-        String user = slack.methods().usersList(r -> r.token(token))
+        String user = slack.methods().usersList(r -> r.token(botToken))
                 .getMembers().get(0).getId();
 
         ReactionsListResponse response = slack.methods().reactionsList(r -> r
-                .token(token)
+                .token(botToken)
                 .user(user));
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));

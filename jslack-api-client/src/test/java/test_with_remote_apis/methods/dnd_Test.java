@@ -28,14 +28,14 @@ public class dnd_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
     @Test
     public void dnd() throws IOException, SlackApiException {
-        List<User> members = slack.methods().usersList(r -> r.token(token).presence(true)).getMembers();
+        List<User> members = slack.methods().usersList(r -> r.token(userToken).presence(true)).getMembers();
         {
             String user = members.get(0).getId();
-            DndInfoResponse response = slack.methods().dndInfo(r -> r.token(token).user(user));
+            DndInfoResponse response = slack.methods().dndInfo(r -> r.token(userToken).user(user));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
             assertThat(response.getNextDndStartTs(), is(notNullValue()));
@@ -46,7 +46,7 @@ public class dnd_Test {
             for (User member : members) {
                 users.add(member.getId());
             }
-            DndTeamInfoResponse response = slack.methods().dndTeamInfo(r -> r.token(token).users(users));
+            DndTeamInfoResponse response = slack.methods().dndTeamInfo(r -> r.token(userToken).users(users));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
             assertThat(response.getUsers(), is(notNullValue()));
@@ -64,7 +64,7 @@ public class dnd_Test {
         }
         {
             DndEndDndResponse response = slack.methods().dndEndDnd(r -> r
-                    .token(token));
+                    .token(userToken));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }
@@ -81,7 +81,7 @@ public class dnd_Test {
         }
         {
             DndEndSnoozeResponse response = slack.methods().dndEndSnooze(r -> r
-                    .token(token));
+                    .token(userToken));
             assertThat(response.getError(), is("snooze_not_active"));
             assertThat(response.isOk(), is(false));
         }
@@ -95,14 +95,14 @@ public class dnd_Test {
         }
         {
             DndSetSnoozeResponse response = slack.methods().dndSetSnooze(r -> r
-                    .token(token)
+                    .token(userToken)
                     .numMinutes(10));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }
         {
             DndEndSnoozeResponse response = slack.methods().dndEndSnooze(r -> r
-                    .token(token));
+                    .token(userToken));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }

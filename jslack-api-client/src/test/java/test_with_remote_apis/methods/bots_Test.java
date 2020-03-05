@@ -34,11 +34,12 @@ public class bots_Test {
         assertThat(response.isOk(), is(false));
     }
 
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
+
     @Test
     public void botsInfo() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
-        List<User> users = slack.methods().usersList(req -> req.token(token)).getMembers();
+        List<User> users = slack.methods().usersList(req -> req.token(botToken)).getMembers();
         User user = null;
         for (User u : users) {
             if (u.isBot() && !"USLACKBOT".equals(u.getId())) {
@@ -48,7 +49,7 @@ public class bots_Test {
         }
         String bot = user.getProfile().getBotId();
 
-        BotsInfoResponse response = slack.methods().botsInfo(req -> req.token(token).bot(bot));
+        BotsInfoResponse response = slack.methods().botsInfo(req -> req.token(botToken).bot(bot));
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
         assertThat(response.getBot(), is(notNullValue()));

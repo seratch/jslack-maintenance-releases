@@ -103,7 +103,7 @@ public class rtm_Test {
 
             Slack slack = Slack.getInstance(testConfig.getConfig());
 
-            try (RTMClient rtm = slack.rtmConnect(botToken)) {
+            try (RTMClient rtm = slack.rtmConnect(classicAppBotToken)) {
                 rtm.addMessageHandler(dispatcher.toMessageHandler());
 
                 rtm.connect();

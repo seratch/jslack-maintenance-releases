@@ -44,7 +44,7 @@ public class BlockKit_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
     String randomChannelId;
 
     @Before
@@ -52,7 +52,7 @@ public class BlockKit_Test {
         if (randomChannelId == null) {
             String channelId = null;
             ChannelsListResponse channelsListResponse = slack.methods().channelsList(req -> req
-                    .token(token)
+                    .token(botToken)
                     .excludeArchived(true)
                     .limit(100));
             assertThat(channelsListResponse.getError(), is(nullValue()));
@@ -75,14 +75,14 @@ public class BlockKit_Test {
         // ephemeral message creation
         {
             String userId = slack.methods().channelsInfo(ChannelsInfoRequest.builder()
-                    .token(token)
+                    .token(botToken)
                     .channel(randomChannelId)
                     .build()
             ).getChannel().getMembers().get(0);
 
             ChatPostEphemeralRequest request = ChatPostEphemeralRequest.builder()
                     .channel(randomChannelId)
-                    .token(token)
+                    .token(botToken)
                     .user(userId)
                     .text("Example message")
                     .blocks(blocks)
@@ -99,7 +99,7 @@ public class BlockKit_Test {
         {
             ChatPostMessageRequest request = ChatPostMessageRequest.builder()
                     .channel("random")
-                    .token(token)
+                    .token(botToken)
                     .text("Example message")
                     .blocks(blocks)
                     .build();
@@ -118,7 +118,7 @@ public class BlockKit_Test {
         newBlocks.add(SectionBlock.builder().text(MarkdownTextObject.builder().text("Added section!").build()).build());
         {
             ChatUpdateRequest request = ChatUpdateRequest.builder()
-                    .token(token)
+                    .token(botToken)
                     .text("Modified text")
                     .channel(postResponse.getChannel())
                     .ts(postResponse.getTs())
@@ -138,7 +138,7 @@ public class BlockKit_Test {
         {
             String channelId = null;
             ChannelsListResponse channelsListResponse = slack.methods().channelsList(req -> req
-                    .token(token)
+                    .token(botToken)
                     .excludeArchived(true)
                     .limit(100));
             assertThat(channelsListResponse.getError(), is(nullValue()));
@@ -151,14 +151,14 @@ public class BlockKit_Test {
             assertThat(channelId, is(notNullValue()));
 
             String userId = slack.methods().channelsInfo(ChannelsInfoRequest.builder()
-                    .token(token)
+                    .token(botToken)
                     .channel(channelId)
                     .build()
             ).getChannel().getMembers().get(0);
 
             ChatPostEphemeralRequest request = ChatPostEphemeralRequest.builder()
                     .channel(channelId)
-                    .token(token)
+                    .token(botToken)
                     .user(userId)
                     .text("Example message")
                     .blocksAsString(blocksAsString)
@@ -175,7 +175,7 @@ public class BlockKit_Test {
         {
             ChatPostMessageRequest request = ChatPostMessageRequest.builder()
                     .channel("random")
-                    .token(token)
+                    .token(botToken)
                     .text("Example message")
                     .blocksAsString(blocksAsString)
                     .build();
@@ -190,7 +190,7 @@ public class BlockKit_Test {
         // message modification
         {
             ChatUpdateRequest request = ChatUpdateRequest.builder()
-                    .token(token)
+                    .token(botToken)
                     .text("Modified text")
                     .channel(postResponse.getChannel())
                     .ts(postResponse.getTs())
@@ -324,7 +324,7 @@ public class BlockKit_Test {
     @Test
     public void useBlockOps() throws IOException, SlackApiException {
         List<LayoutBlock> blocks = asBlocks(actions(asElements(button(b -> b.text(plainText(pt -> pt.text("foo"))).value("v")))));
-        ChatPostMessageResponse response = slack.methods(token).chatPostMessage(req -> req
+        ChatPostMessageResponse response = slack.methods(botToken).chatPostMessage(req -> req
                 .channel(randomChannelId)
                 .blocks(blocks));
         assertThat(response.getError(), is(nullValue()));

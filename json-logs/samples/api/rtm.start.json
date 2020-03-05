@@ -299,7 +299,13 @@
         "fr-FR": "",
         "pt-BR": "",
         "ja-JP": ""
-      }
+      },
+      "suppress_link_warning": false,
+      "seen_ia_education": false,
+      "browsers_dismissed_user_groups_low_results_education": false,
+      "browsers_seen_initial_user_groups_education": false,
+      "browsers_dismissed_files_low_results_education": false,
+      "browsers_seen_initial_files_education": false
     },
     "created": 12345,
     "manual_presence": ""
@@ -343,6 +349,9 @@
             "name": "",
             "image": ""
           }
+        ],
+        "profile_field_options": [
+          ""
         ]
       },
       "allow_calls_interactive_screen_sharing": false,
@@ -482,7 +491,41 @@
       },
       "workflows_webhook_trigger_enabled": false,
       "workflows_export_csv_enabled": false,
-      "invites_limit": false
+      "invites_limit": false,
+      "who_can_view_message_activity": {
+        "type": [
+          ""
+        ]
+      },
+      "channel_email_addresses_enabled": false,
+      "who_can_manage_public_channels": {
+        "user": [
+          ""
+        ],
+        "subteam": [
+          ""
+        ],
+        "type": [
+          ""
+        ]
+      },
+      "who_can_manage_private_channels": {
+        "user": [
+          ""
+        ],
+        "subteam": [
+          ""
+        ],
+        "type": [
+          ""
+        ]
+      },
+      "single_user_exports": false,
+      "who_can_create_channel_email_addresses": {
+        "type": [
+          ""
+        ]
+      }
     },
     "icon": {
       "image_34": "https://www.example.com/",
@@ -732,6 +775,8 @@
     }
   ],
   "url": "",
+  "accept_tos_url": "https://www.example.com/",
+  "is_europe": false,
   "error": "",
   "needed": "",
   "provided": ""

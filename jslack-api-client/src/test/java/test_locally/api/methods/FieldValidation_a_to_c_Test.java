@@ -167,7 +167,10 @@ public class FieldValidation_a_to_c_Test {
                     "getItemType",
                     "getImage\\d+$",
                     "getComment",
-                    "getItem"
+                    "getItem",
+                    "getUser",
+                    "getTeam",
+                    "getBotProfile"
             );
         }
         {
@@ -234,7 +237,7 @@ public class FieldValidation_a_to_c_Test {
         }
         {
             ChatPostMessageResponse obj = parse(prefix + "postMessage", ChatPostMessageResponse.class);
-            verifyIfAllGettersReturnNonNull(obj);
+            verifyIfAllGettersReturnNonNull(obj, "getDeprecatedArgument", "getWarning");
             validateMessage(obj.getMessage());
             verifyIfAllGettersReturnNonNull(obj.getResponseMetadata());
         }
@@ -438,7 +441,8 @@ public class FieldValidation_a_to_c_Test {
                     "getIsMoved",
                     "getPendingShared",
                     "getLastRead",
-                    "getEdited"
+                    "getEdited",
+                    "getBotProfile"
             );
         }
         {

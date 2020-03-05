@@ -32,16 +32,16 @@ public class SimpleExampleTest {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
 
     @Test
     public void postAMessageToRandomChannel() throws IOException, SlackApiException, InterruptedException {
 
         // find all channels in the team
-        ChannelsListResponse channelsResponse = slack.methods().channelsList(r -> r.token(token));
+        ChannelsListResponse channelsResponse = slack.methods().channelsList(r -> r.token(botToken));
         assertThat(channelsResponse.isOk(), is(true));
         // find #random
-        List<Channel> channels_ = slack.methods().channelsList(r -> r.token(token)).getChannels();
+        List<Channel> channels_ = slack.methods().channelsList(r -> r.token(botToken)).getChannels();
         Channel random = null;
         for (Channel c : channels_) {
             if (c.getName().equals("random")) {
@@ -52,7 +52,7 @@ public class SimpleExampleTest {
 
         // https://slack.com/api/chat.postMessage
         ChatPostMessageResponse postResponse = slack.methods().chatPostMessage(ChatPostMessageRequest.builder()
-                .token(token)
+                .token(botToken)
                 .channel(random.getId())
                 .text("Hello World!")
                 .build());
@@ -65,7 +65,7 @@ public class SimpleExampleTest {
         Thread.sleep(1000L);
 
         ChatDeleteResponse deleteResponse = slack.methods().chatDelete(ChatDeleteRequest.builder()
-                .token(token)
+                .token(botToken)
                 .channel(random.getId())
                 .ts(messageTimestamp)
                 .build());
