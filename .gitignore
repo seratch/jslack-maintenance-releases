@@ -29,3 +29,5 @@ verificationToken.txt
 *.hprof
 
 .idea/
+
+bin/

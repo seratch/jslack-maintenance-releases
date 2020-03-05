@@ -14,6 +14,11 @@ Most classes and APIs are compatible with jSlack but there are some differences.
 
 More changes may be introduced until java-slack-sdk's initial release. This migration gudie will be updated accordingly.
 
+## version 3.4.2 (2020-03-06)
+
+* 72b7f5a Apply https://github.com/slackapi/java-slack-sdk/pull/373 by Kazuhiro Sera
+* 517e053 Fix https://github.com/slackapi/java-slack-sdk/issues/359 by Kazuhiro Sera
+
 ## version 3.4.1 (2020-02-12)
 
 * fdf29aa Add http proxy support for all the clients by Kazuhiro Sera
