@@ -3,8 +3,7 @@ package com.github.seratch.jslack.api.methods.request.chat;
 import com.github.seratch.jslack.api.methods.SlackApiRequest;
 import com.github.seratch.jslack.api.model.Attachment;
 import com.github.seratch.jslack.api.model.block.LayoutBlock;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
@@ -40,9 +39,23 @@ public class ChatUpdateRequest implements SlackApiRequest {
     private String user;
 
     /**
-     * Pass true to post the message as the authed bot. Defaults to false.
+     * Pass true to delete the message as the authed user with chat:write:user scope.
+     * Bot users in this context are considered authed users.
+     * If unused or false, the message will be deleted with chat:write:bot scope.
      */
-    private boolean asUser;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Boolean asUser;
+
+    // NOTE: The default value is intentionally null to support workplace apps.
+    public Boolean isAsUser() {
+        return this.asUser;
+    }
+
+    // NOTE: The default value is intentionally null to support workplace apps.
+    public void setAsUser(Boolean asUser) {
+        this.asUser = asUser;
+    }
 
     /**
      * A JSON-based array of structured blocks, presented as a URL-encoded string.

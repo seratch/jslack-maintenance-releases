@@ -32,11 +32,11 @@ public class stars_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
     @Test
     public void list() throws IOException, SlackApiException {
-        StarsListResponse response = slack.methods().starsList(r -> r.token(token));
+        StarsListResponse response = slack.methods().starsList(r -> r.token(userToken));
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
         assertThat(response.getItems(), is(notNullValue()));
@@ -44,7 +44,7 @@ public class stars_Test {
 
     @Test
     public void add() throws IOException, SlackApiException {
-        List<Channel> channels = slack.methods().channelsList(r -> r.token(token)).getChannels();
+        List<Channel> channels = slack.methods().channelsList(r -> r.token(userToken)).getChannels();
         List<String> channelIds = new ArrayList<>();
         for (Channel c : channels) {
             if (c.getName().equals("random")) {
@@ -57,7 +57,7 @@ public class stars_Test {
         com.github.seratch.jslack.api.model.File fileObj;
         {
             FilesUploadResponse response = slack.methods().filesUpload(r -> r
-                    .token(token)
+                    .token(userToken)
                     .channels(channelIds)
                     .file(file)
                     .filename("sample.txt")
@@ -70,7 +70,7 @@ public class stars_Test {
 
         {
             StarsAddResponse response = slack.methods().starsAdd(r -> r
-                    .token(token)
+                    .token(userToken)
                     .channel(channelIds.get(0))
                     .file(fileObj.getId()));
             assertThat(response.getError(), is(nullValue()));
@@ -78,7 +78,7 @@ public class stars_Test {
         }
         {
             StarsRemoveResponse response = slack.methods().starsRemove(r -> r
-                    .token(token)
+                    .token(userToken)
                     .channel(channelIds.get(0))
                     .file(fileObj.getId()));
             assertThat(response.getError(), is(nullValue()));
@@ -89,7 +89,7 @@ public class stars_Test {
             // as of August 2018, File object no longer contains initialComment.
             if (fileObj.getInitialComment() != null) {
                 StarsAddResponse response = slack.methods().starsAdd(r -> r
-                        .token(token)
+                        .token(userToken)
                         .channel(channelIds.get(0))
                         .fileComment(fileObj.getInitialComment().getId()));
                 assertThat(response.getError(), is(nullValue()));

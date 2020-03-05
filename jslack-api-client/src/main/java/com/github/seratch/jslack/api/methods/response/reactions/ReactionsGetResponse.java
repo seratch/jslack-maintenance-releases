@@ -1,6 +1,7 @@
 package com.github.seratch.jslack.api.methods.response.reactions;
 
 import com.github.seratch.jslack.api.methods.SlackApiResponse;
+import com.github.seratch.jslack.api.model.BotProfile;
 import com.github.seratch.jslack.api.model.Reaction;
 import lombok.Data;
 
@@ -25,6 +26,9 @@ public class ReactionsGetResponse implements SlackApiResponse {
         private String subtype;
         private String text;
         private String ts;
+        private String team;
+        private String user;
+        private BotProfile botProfile;
         private String username;
         private String botId;
         private String permalink;

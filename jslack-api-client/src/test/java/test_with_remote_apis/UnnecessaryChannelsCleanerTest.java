@@ -30,12 +30,13 @@ public class UnnecessaryChannelsCleanerTest {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
+
     @Ignore
     @Test
     public void deleteUnnecessaryPublicChannels() throws Exception {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
         for (Channel channel : slack.methods().channelsList(r -> r
-                .token(token)
+                .token(botToken)
                 .excludeArchived(true)
                 .limit(1000)).getChannels()) {
 
@@ -43,7 +44,7 @@ public class UnnecessaryChannelsCleanerTest {
 
             if (channel.getName().startsWith("test") && !channel.isGeneral()) {
                 ChannelsArchiveResponse resp = slack.methods().channelsArchive(r -> r
-                        .token(token).channel(channel.getId()));
+                        .token(botToken).channel(channel.getId()));
                 assertThat(resp.getError(), is(nullValue()));
             }
         }
@@ -52,9 +53,8 @@ public class UnnecessaryChannelsCleanerTest {
     @Ignore
     @Test
     public void deleteUnnecessaryPrivateChannels() throws Exception {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
         for (Conversation channel : slack.methods().conversationsList(r -> r
-                .token(token)
+                .token(botToken)
                 .excludeArchived(true)
                 .limit(1000)
                 .types(Arrays.asList(ConversationType.PRIVATE_CHANNEL))).getChannels()) {
@@ -64,7 +64,7 @@ public class UnnecessaryChannelsCleanerTest {
             if ((channel.getName().startsWith("test") || channel.getName().startsWith("secret-"))
                     && !channel.isGeneral()) {
                 ConversationsArchiveResponse resp = slack.methods().conversationsArchive(r -> r
-                        .token(token)
+                        .token(botToken)
                         .channel(channel.getId()));
                 assertThat(resp.getError(), is(nullValue()));
             }

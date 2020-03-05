@@ -37,8 +37,8 @@ public class auth_Test {
 
     @Test
     public void authTest_user() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
-        AuthTestResponse response = slack.methods().authTest(req -> req.token(token));
+        String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+        AuthTestResponse response = slack.methods().authTest(req -> req.token(userToken));
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
         assertThat(response.getUrl(), is(notNullValue()));
@@ -46,8 +46,8 @@ public class auth_Test {
 
     @Test
     public void authTest_user_2() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
-        AuthTestResponse response = slack.methods(token).authTest(req -> req);
+        String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+        AuthTestResponse response = slack.methods(userToken).authTest(req -> req);
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
         assertThat(response.getUrl(), is(notNullValue()));
@@ -55,8 +55,8 @@ public class auth_Test {
 
     @Test
     public void authTest_bot() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
-        AuthTestResponse response = slack.methods(token).authTest(req -> req);
+        String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
+        AuthTestResponse response = slack.methods(botToken).authTest(req -> req);
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
         assertThat(response.getUrl(), is(notNullValue()));
@@ -64,8 +64,8 @@ public class auth_Test {
 
     @Test
     public void authTest_grid() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_GRID_WORKSPACE_ADMIN_USER_TOKEN);
-        AuthTestResponse response = slack.methods().authTest(req -> req.token(token));
+        String orgAdminToken = System.getenv(Constants.SLACK_SDK_TEST_GRID_WORKSPACE_ADMIN_USER_TOKEN);
+        AuthTestResponse response = slack.methods().authTest(req -> req.token(orgAdminToken));
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
         assertThat(response.getUrl(), is(notNullValue()));

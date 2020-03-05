@@ -28,11 +28,11 @@ public class search_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+    String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
 
     @Test
     public void all() throws IOException, SlackApiException {
-        SearchAllResponse response = slack.methods().searchAll(r -> r.token(token).query("test"));
+        SearchAllResponse response = slack.methods().searchAll(r -> r.token(userToken).query("test"));
 
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
@@ -40,7 +40,7 @@ public class search_Test {
 
     @Test
     public void messages() throws IOException, SlackApiException {
-        SearchMessagesResponse response = slack.methods().searchMessages(r -> r.token(token).query("test"));
+        SearchMessagesResponse response = slack.methods().searchMessages(r -> r.token(userToken).query("test"));
 
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));
@@ -53,7 +53,7 @@ public class search_Test {
 
     @Test
     public void files() throws IOException, SlackApiException {
-        SearchFilesResponse response = slack.methods().searchFiles(r -> r.token(token).query("test"));
+        SearchFilesResponse response = slack.methods().searchFiles(r -> r.token(userToken).query("test"));
 
         assertThat(response.getError(), is(nullValue()));
         assertThat(response.isOk(), is(true));

@@ -20,6 +20,7 @@ import config.Constants;
 import config.SlackTestConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -41,11 +42,12 @@ public class ShortcutFunctionalitiesTest {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
-    ApiToken token = ApiToken.of(System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN));
+    ApiToken userToken = ApiToken.of(System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN));
 
+    @Ignore
     @Test
     public void chatOps() throws IOException, SlackApiException {
-        Shortcut shortcut = slack.shortcut(token);
+        Shortcut shortcut = slack.shortcut(userToken);
         ChannelName channelName = ChannelName.of("random");
 
         Optional<ChannelId> channelId = shortcut.findChannelIdByName(channelName);
@@ -67,9 +69,10 @@ public class ShortcutFunctionalitiesTest {
         assertThat(addReaction.isOk(), is(true));
     }
 
+    @Ignore
     @Test
     public void postMessage() throws IOException, SlackApiException {
-        Shortcut shortcut = slack.shortcut(token);
+        Shortcut shortcut = slack.shortcut(userToken);
         Attachment attachment = Attachment.builder().text("text").footer("footer").build();
         List<Attachment> attachments = Arrays.asList(attachment);
 
@@ -100,7 +103,7 @@ public class ShortcutFunctionalitiesTest {
 
     @Test
     public void postMessage_blocks() throws IOException, SlackApiException {
-        Shortcut shortcut = slack.shortcut(token);
+        Shortcut shortcut = slack.shortcut(userToken);
 
         {
             MarkdownTextObject text = MarkdownTextObject.builder()

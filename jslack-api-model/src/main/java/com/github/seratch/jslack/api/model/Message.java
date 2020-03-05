@@ -102,8 +102,11 @@ public class Message {
     @Data
     public static class MessageRoot {
         private String text;
+        private String user;
         private String username;
+        private String team;
         private String botId;
+        private BotProfile botProfile;
         private boolean mrkdwn;
         private String type;
         private String subtype;

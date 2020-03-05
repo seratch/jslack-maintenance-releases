@@ -31,13 +31,15 @@ public class users_Test {
         SlackTestConfig.awaitCompletion(testConfig);
     }
 
+    String botToken = System.getenv(Constants.SLACK_SDK_TEST_BOT_TOKEN);
+    String userToken = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
+
     @Test
     public void showUsers() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
-        UsersListResponse users = slack.methods(token).usersList(r -> r.includeLocale(true).limit(100));
+        UsersListResponse users = slack.methods(botToken).usersList(r -> r.includeLocale(true).limit(100));
         assertThat(users.getError(), is(nullValue()));
 
-        UsersInfoResponse usersInfo = slack.methods(token)
+        UsersInfoResponse usersInfo = slack.methods(botToken)
                 .usersInfo(r -> r.user(users.getMembers().get(0).getId()).includeLocale(true));
         assertThat(usersInfo.getError(), is(nullValue()));
         assertThat(usersInfo.getUser().getLocale(), is(notNullValue()));
@@ -49,23 +51,21 @@ public class users_Test {
 
     @Test
     public void usersScenarios() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
-
         {
-            UsersSetPresenceResponse response = slack.methods().usersSetPresence(r -> r.token(token).presence("away"));
+            UsersSetPresenceResponse response = slack.methods().usersSetPresence(r -> r.token(userToken).presence("away"));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }
 
         {
             UsersSetActiveResponse response = slack.methods().usersSetActive(
-                    UsersSetActiveRequest.builder().token(token).build());
+                    UsersSetActiveRequest.builder().token(userToken).build());
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }
 
         {
-            UsersIdentityResponse response = slack.methods().usersIdentity(r -> r.token(token));
+            UsersIdentityResponse response = slack.methods().usersIdentity(r -> r.token(userToken));
             // TODO: test preparation?
             // {"ok":false,"error":"missing_scope","needed":"identity.basic","provided":"identify,read,post,client,apps,admin"}
             assertThat(response.getError(), is("missing_scope"));
@@ -73,7 +73,7 @@ public class users_Test {
         }
 
         UsersListResponse usersListResponse = slack.methods().usersList(r -> r
-                .token(token)
+                .token(userToken)
                 .limit(2)
                 .presence(true));
         List<User> users = usersListResponse.getMembers();
@@ -106,14 +106,14 @@ public class users_Test {
         }
 
         {
-            UsersInfoResponse response = slack.methods().usersInfo(r -> r.token(token).user(userId));
+            UsersInfoResponse response = slack.methods().usersInfo(r -> r.token(userToken).user(userId));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
             assertThat(response.getUser(), is(notNullValue()));
         }
 
         {
-            UsersGetPresenceResponse response = slack.methods().usersGetPresence(r -> r.token(token).user(userId));
+            UsersGetPresenceResponse response = slack.methods().usersGetPresence(r -> r.token(userToken).user(userId));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
             assertThat(response.getPresence(), is(notNullValue()));
@@ -121,14 +121,14 @@ public class users_Test {
 
         {
             UsersConversationsResponse response = slack.methods().usersConversations(r -> r
-                    .token(token)
+                    .token(userToken)
                     .user(userId));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }
 
         {
-            UsersDeletePhotoResponse response = slack.methods().usersDeletePhoto(r -> r.token(token));
+            UsersDeletePhotoResponse response = slack.methods().usersDeletePhoto(r -> r.token(userToken));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
         }
@@ -136,7 +136,7 @@ public class users_Test {
         File image = new File("src/test/resources/user_photo.jpg");
         {
             UsersSetPhotoResponse response = slack.methods().usersSetPhoto(r -> r
-                    .token(token)
+                    .token(userToken)
                     .image(image));
             assertThat(response.getError(), is(nullValue()));
             assertThat(response.isOk(), is(true));
@@ -145,9 +145,8 @@ public class users_Test {
 
     @Test
     public void lookupByEMailSupported() throws IOException, SlackApiException {
-        String token = System.getenv(Constants.SLACK_SDK_TEST_USER_TOKEN);
         UsersListResponse usersListResponse = slack.methods().usersList(r -> r
-                .token(token)
+                .token(botToken)
                 .presence(true));
 
         List<User> users = usersListResponse.getMembers();
@@ -163,7 +162,7 @@ public class users_Test {
         }
 
         UsersLookupByEmailResponse response = slack.methods().usersLookupByEmail(UsersLookupByEmailRequest.builder()
-                .token(token)
+                .token(botToken)
                 .email(randomUserWhoHasEmail.getProfile().getEmail())
                 .build());
 
