@@ -24,10 +24,10 @@ public class BlockKitTest {
         String json = "{blocks: [{\n" +
                 "  \"type\": \"input\",\n" +
                 "  \"block_id\": \"input123\",\n" +
-                "    \"label\": {\n" +
-                "        \"type\": \"plain_text\",\n" +
-                "        \"text\": \"Label of input\"\n" +
-                "    },\n" +
+                "  \"label\": {\n" +
+                "    \"type\": \"plain_text\",\n" +
+                "    \"text\": \"Label of input\"\n" +
+                "  },\n" +
                 "  \"element\": {\n" +
                 "    \"type\": \"plain_text_input\",\n" +
                 "    \"action_id\": \"plain_input\",\n" +
@@ -35,13 +35,15 @@ public class BlockKitTest {
                 "      \"type\": \"plain_text\",\n" +
                 "      \"text\": \"Enter some plain text\"\n" +
                 "    }\n" +
-                "  }\n" +
+                "  },\n" +
+                "  \"dispatch_action\": true\n" +
                 "}]}";
         Message message = GsonFactory.createSnakeCase().fromJson(json, Message.class);
         assertThat(message, is(notNullValue()));
         InputBlock inputBlock = (InputBlock) message.getBlocks().get(0);
         assertThat(inputBlock.getLabel(), is(notNullValue()));
         assertThat(inputBlock.getElement(), is(notNullValue()));
+        assertThat(inputBlock.isDispatchAction(), is(true));
     }
 
     @Test
